@@ -42,8 +42,9 @@ class Ball:
             self.speedy = 0
             self.t = 0
             self.dT = 0
-        vely = self.speedy*self.t
-        canvas.move(self.shape, self.speedx*self.t-self.speedx*(self.t-self.dT), (vely+0.5*gravity*self.t**2-self.speedy*(self.t-self.dT)-0.5*gravity*(self.t-self.dT)**2))
+        dy = self.speedy*self.t+0.5*gravity*self.t**2-self.speedy*(self.t-self.dT)-0.5*gravity*(self.t-self.dT)**2
+        dx = self.speedx*self.t-self.speedx*(self.t-self.dT)
+        canvas.move(self.shape, dx, dy)
         pos = canvas.coords(self.shape)
         if pos[2] >= WIDTH or pos[0] <= 0:
             if self.delayt >= 3*self.dT:
@@ -51,12 +52,12 @@ class Ball:
                 self.delayt = 0
         if pos[1] <= 0:
             if self.t >= 3*self.dT:
-                self.speedy = -(vely+0.5*gravity*self.t**2-self.speedy*(self.t-self.dT)-0.5*gravity*(self.t-self.dT)**2)*bC*(1/dT)
+                self.speedy = -dy*bC*(1/dT)
                 self.t = 0
                 self.speedx *= bxC
         if pos[3] >= HEIGHT:
             if self.t >= 3*self.dT:
-                self.speedy = -(vely+0.5*gravity*self.t**2-self.speedy*(self.t-self.dT)-0.5*gravity*(self.t-self.dT)**2)*bC*(1/dT)
+                self.speedy = -dy*bC*(1/dT)
                 self.speedx *= bxC
                 self.t = 0
        
